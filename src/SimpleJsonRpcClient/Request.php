@@ -28,7 +28,7 @@ class Request
 	private $_params;
 
 	/**
-	 * @var int optional request ID
+	 * @var mixed the request ID
 	 */
 	private $_id;
 
@@ -37,21 +37,17 @@ class Request
 	 * @param string the method
 	 * @param mixed the request parameters. Defaults to null, meaning the 
 	 * request is sent without parameters
-	 * @param int optional request ID. Defaults to null, meaning no ID will be 
-	 * used in the request
+	 * @param mixed optional request ID. Defaults to 0
 	 * @throws Exception if any of the parameters are malformed
 	 */
-	function __construct($method, $params = null, $id = null)
+	function __construct($method, $params = null, $id = 0)
 	{
 		if ($params !== null && !is_array($params))
 			throw new Exception('Parameters must be specified as an array');
 
-		if ($id !== null && !is_numeric($id))
-			throw new Exception('ID must be specified as an array');
-
 		$this->_method = $method;
 		$this->_params = $params;
-		$this->_id = $id !== null ? (int)$id : $id;
+		$this->_id = $id;
 	}
 
 	/**
@@ -63,12 +59,10 @@ class Request
 		$object = new \stdClass();
 		$object->jsonrpc = self::JSON_RPC_VERSION;
 		$object->method = $this->_method;
+		$object->id = $this->_id;
 
 		if ($this->_params !== null)
 			$object->params = $this->_params;
-
-		if ($this->_id !== null)
-			$object->id = $this->_id;
 
 		return json_encode($object);
 	}
