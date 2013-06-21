@@ -60,8 +60,13 @@ class Client
 		$httpRequest->setMethod(\Zend\Http\Request::METHOD_POST);
 		$httpRequest->setContent($request);
 
-		$httpResponse = self::$_httpClient->dispatch($httpRequest);
+		// Set headers
+		$headers = $httpRequest->getHeaders();
+		$headers->addHeaderLine('Content-Type', 'application/json');
+		$httpRequest->setHeaders($headers);
 
+		$httpResponse = self::$_httpClient->dispatch($httpRequest);
+		
 		// TODO: Error handling
 		return new Response($httpResponse->getContent());
 	}
