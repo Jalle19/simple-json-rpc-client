@@ -2,5 +2,10 @@
     "name": "Jalle19/simple-json-rpc-client",
     "require": {
         "zendframework/zend-http": "2.2.*"
-    }
+    },
+    "autoload": {
+        "psr-0": {
+            "SimpleJsonRpcClient\\": "src/"
+        }
+    },
 }
