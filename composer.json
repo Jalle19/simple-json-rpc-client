@@ -1,4 +1,5 @@
 {
+    "name": "Jalle19/simple-json-rpc-client",
     "require": {
         "zendframework/zend-http": "2.2.*"
     }
