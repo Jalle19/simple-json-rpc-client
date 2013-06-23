@@ -28,16 +28,22 @@ class Response
 
 	/**
 	 * Class constructor. It takes a raw response in JSON as parameter and 
-	 * assembles itself from it.
+	 * assembles itself from it. If the response represents an error, an 
+	 * exception will be thrown
 	 * @param string $json the response data
+	 * @throws SimpleJsonRpcClient\Exception if response represents an error
 	 */
 	public function __construct($json)
 	{
 		$response = json_decode($json);
-
+		
 		$this->version = $response->jsonrpc;
-		$this->result = $response->result;
 		$this->id = $response->id;
+		
+		if (isset($response->error))
+			throw new Exception($response->error->message, $response->error->code);
+		
+		$this->result = $response->result;
 	}
 
 }
