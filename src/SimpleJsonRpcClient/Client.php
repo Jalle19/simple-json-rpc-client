@@ -67,7 +67,14 @@ class Client
 
 		$httpResponse = self::$_httpClient->dispatch($httpRequest);
 		
-		// TODO: Error handling
+		// Check status
+		if (!$httpResponse->isSuccess())
+		{
+			throw new \SimpleJsonRpcClient\Exception(
+					$httpResponse->getReasonPhrase(), 
+					$httpResponse->getStatusCode());
+		}
+
 		return new Response($httpResponse->getContent());
 	}
 
