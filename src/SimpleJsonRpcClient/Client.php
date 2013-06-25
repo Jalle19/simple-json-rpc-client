@@ -65,7 +65,16 @@ class Client
 		$headers->addHeaderLine('Content-Type', 'application/json');
 		$httpRequest->setHeaders($headers);
 
-		$httpResponse = self::$_httpClient->dispatch($httpRequest);
+		// Try to dispatch the request. If it fails we re-throw the exception 
+		// from our own namespace
+		try
+		{
+			$httpResponse = self::$_httpClient->dispatch($httpRequest);
+		}
+		catch (\Exception $e)
+		{
+			throw new \SimpleJsonRpcClient\Exception($e->getMessage());
+		}
 		
 		// Check status
 		if (!$httpResponse->isSuccess())
