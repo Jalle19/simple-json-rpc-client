@@ -1,5 +1,10 @@
 {
     "name": "jalle19/simple-json-rpc-client",
+	"type": "library",
+	"description": "Simple JSON-RPC 2.0 client which utilizes Zend for HTTP functionality",
+	"keywords": ["jsonrpc"],
+	"homepage": "https://github.com/Jalle19/simple-json-rpc-client",
+	"license": "BSD-2-Clause",
     "require": {
         "zendframework/zend-http": "2.2.*"
     },
