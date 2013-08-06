@@ -15,7 +15,7 @@ class Client
 	/**
 	 * @var \Zend\Http\Client the HTTP client
 	 */
-	private static $_httpClient;
+	private $_httpClient;
 
 	/**
 	 * @var string the JSON-RPC API end-point URL
@@ -33,7 +33,7 @@ class Client
 	private $_password;
 
 	/**
-	 * Class constructor. It sets properties and initializes the HTTP client
+	 * Class constructor
 	 * @param type $endPoint
 	 * @param type $username
 	 * @param type $password
@@ -44,8 +44,11 @@ class Client
 		$this->_username = $username;
 		$this->_password = $password;
 
-		if (!isset(self::$_httpClient))
-			$this->initHttpClient();
+		// Initialize the HTTP client
+		$this->_httpClient = new \Zend\Http\Client();
+
+		if ($this->_username && $this->_password)
+			$this->_httpClient->setAuth($this->_username, $this->_password);
 	}
 
 	/**
@@ -69,7 +72,7 @@ class Client
 		// from our own namespace
 		try
 		{
-			$httpResponse = self::$_httpClient->dispatch($httpRequest);
+			$httpResponse = $this->_httpClient->dispatch($httpRequest);
 		}
 		catch (\Exception $e)
 		{
@@ -85,17 +88,6 @@ class Client
 		}
 
 		return new Response($httpResponse->getContent());
-	}
-
-	/**
-	 * Initializes the HTTP client
-	 */
-	private function initHttpClient()
-	{
-		self::$_httpClient = new \Zend\Http\Client();
-
-		if ($this->_username && $this->_password)
-			self::$_httpClient->setAuth($this->_username, $this->_password);
 	}
 
 }
