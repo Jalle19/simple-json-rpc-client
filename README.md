@@ -1,7 +1,7 @@
 simple-json-rpc-client
 ======================
 
-This is a simple, Composer-installable JSON-RPC 2.0 client which utilizes Zend for HTTP functionality.
+Simple JSON-RPC 2.0 client which utilizes Zend for HTTP functionality.
 
 ## Installation
 
@@ -19,7 +19,8 @@ $client = new Client('localhost', 'username', 'password');
 
 // The client will rethrow all Zend exceptions from its own namespace 
 // so we only need to catch one type of exception
-try {
+try 
+{
 	// Only the first parameter is required. 
 	$request = new Request('method', array('param1'=>'value1), 1);
 	
@@ -28,7 +29,8 @@ try {
 	// Returns a Response object
 	$response = $client->performRequest($request));
 }
-catch(Exception $e) {
+catch (Exception $e) 
+{
 	echo $e->getMessage();
 }
 ```
