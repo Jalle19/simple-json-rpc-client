@@ -22,7 +22,7 @@ $client = new Client('localhost', 'username', 'password');
 try 
 {
 	// Only the first parameter is required. 
-	$request = new Request('method', array('param1'=>'value1), 1);
+	$request = new Request('method', array('param1'=>'value1'), 1);
 	
 	// When treated as a string the Request object returns its JSON representation
 	
