@@ -16,7 +16,7 @@ class Response
 	/**
 	 * @var string the JSON-RPC version of the response
 	 */
-	public $version;
+	public $jsonrpc;
 
 	/**
 	 * @var object the result
@@ -39,7 +39,7 @@ class Response
 	{
 		$response = json_decode($json);
 		
-		$this->version = $response->jsonrpc;
+		$this->jsonrpc = $response->jsonrpc;
 		$this->id = $response->id;
 		
 		if (isset($response->error))
