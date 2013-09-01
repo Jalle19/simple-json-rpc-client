@@ -30,22 +30,69 @@ class Response
 
 	/**
 	 * Class constructor. It takes a raw response in JSON as parameter and 
-	 * assembles itself from it. If the response represents an error, an 
-	 * exception will be thrown
+	 * assembles itself from it. An exception will be thrown if the response 
+	 * contains invalid JSON, if the JSON-RPC object represents an error or if 
+	 * the JSON-RPC response is invalid.
 	 * @param string $json the response data
-	 * @throws SimpleJsonRpcClient\Exception if response represents an error
+	 * @throws SimpleJsonRpcClient\Exception
 	 */
 	public function __construct($json)
 	{
-		$response = json_decode($json);
-		
-		$this->jsonrpc = $response->jsonrpc;
-		$this->id = $response->id;
-		
+		$response = $this->decode($json);
+
+		// Check for mandatory fields
+		foreach (array('jsonrpc', 'id') as $attribute)
+		{
+			if (!isset($response->{$attribute}))
+				throw new Exception('Invalid JSON-RPC response. The raw response was: '.$json);
+
+			$this->{$attribute} = $response->{$attribute};
+		}
+
 		if (isset($response->error))
 			throw new Exception($response->error->message, $response->error->code);
 		
 		$this->result = $response->result;
+	}
+	
+	/**
+	 * Decodes the supplied JSON string, throwing an exception if decoding fails
+	 * @param string $json the raw JSON string
+	 * @return stdClass the decoded object
+	 * @throws Exception if a parse error occurs
+	 */
+	private function decode($json)
+	{
+		$response = json_decode($json);
+		$errorCode = json_last_error();
+		$errorDescription = '';
+
+		switch ($errorCode)
+		{
+			case JSON_ERROR_DEPTH:
+				$errorDescription = 'Maximum stack depth exceeded';
+				break;
+			case JSON_ERROR_STATE_MISMATCH:
+				$errorDescription = 'Underflow or the modes mismatch';
+				break;
+			case JSON_ERROR_CTRL_CHAR:
+				$errorDescription = 'Unexpected control character found';
+				break;
+			case JSON_ERROR_SYNTAX:
+				$errorDescription = 'Syntax error, malformed JSON';
+				break;
+			case JSON_ERROR_UTF8:
+				$errorDescription = 'Malformed UTF-8 characters, possibly incorrectly encoded';
+				break;
+			default:
+				$errorDescription = 'Unknown error';
+				break;
+		}
+
+		if ($errorCode !== JSON_ERROR_NONE)
+			throw new Exception('Unable to decode JSON response: '.$errorDescription, $errorCode);
+
+		return $response;
 	}
 
 }
