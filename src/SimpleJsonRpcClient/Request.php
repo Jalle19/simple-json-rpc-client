@@ -59,7 +59,7 @@ class Request
 	function __toString()
 	{
 		$object = new \stdClass();
-		$object->jsonrpc = self::JSON_RPC_VERSION;
+		$object->jsonrpc = Client::JSON_RPC_VERSION;
 		$object->method = $this->_method;
 		$object->id = $this->_id;
 

@@ -49,6 +49,9 @@ class Response
 			$this->{$attribute} = $response->{$attribute};
 		}
 
+		if ($response->jsonrpc !== Client::JSON_RPC_VERSION)
+			throw new Exception('This client only supports JSON-RPC '.Client::JSON_RPC_VERSION);
+		
 		if (isset($response->error))
 			throw new Exception($response->error->message, $response->error->code);
 		

@@ -13,6 +13,11 @@ namespace SimpleJsonRpcClient;
 
 class Client
 {
+	
+	/**
+	 * The version string
+	 */
+	const JSON_RPC_VERSION = '2.0';
 
 	/**
 	 * @var \Zend\Http\Client the HTTP client
