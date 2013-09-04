@@ -15,10 +15,24 @@ class Client
 {
 	
 	/**
+	 * Normally an exception is thrown when the client receives JSON containing 
+	 * malformed UTF-8. When this flag is set, the client will attempt to 
+	 * recover such situations by decoding and subsequently encoding the JSON 
+	 * response before attempting to unserialize the JSON.
+	 */
+	const FLAG_ATTEMPT_UTF8_RECOVERY = 1;
+	
+	/**
 	 * The version string
 	 */
 	const JSON_RPC_VERSION = '2.0';
 
+	/**
+	 *
+	 * @var int the flags that have been set
+	 */
+	public static $flags;
+	
 	/**
 	 * @var \Zend\Http\Client the HTTP client
 	 */
@@ -44,12 +58,14 @@ class Client
 	 * @param type $endPoint
 	 * @param type $username
 	 * @param type $password
+	 * @param int $flags flags for the client
 	 */
-	public function __construct($endPoint, $username = null, $password = null)
+	public function __construct($endPoint, $username = null, $password = null, $flags = 0)
 	{
 		$this->_endPoint = $endPoint;
 		$this->_username = $username;
 		$this->_password = $password;
+		self::$flags = $flags;
 
 		// Initialize the HTTP client
 		$this->_httpClient = new \Zend\Http\Client();

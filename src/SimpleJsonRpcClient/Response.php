@@ -66,6 +66,11 @@ class Response
 	 */
 	private function decode($json)
 	{
+		// Attempt to fix bad UTF-8 data when the right flag is set on the client
+		if (Client::$flags & Client::FLAG_ATTEMPT_UTF8_RECOVERY)
+			if (!preg_match("//u", $json))
+				$json = utf8_encode(utf8_decode($json));
+		
 		$response = json_decode($json);
 		$errorCode = json_last_error();
 		$errorDescription = '';
