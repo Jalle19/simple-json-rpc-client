@@ -35,6 +35,10 @@ catch (Exception $e)
 }
 ```
 
+## Flags
+
+The client constructor takes a set of flags as the forth parameter. These flags can be used to alter the behavior of the client, mostly useful for working with buggy servers. For example, the `FLAG_ATTEMPT_UTF8_RECOVERY` flag will attempt to avoid "Malformed UTF-8 in response" errors by re-encoding the raw response as UTF-8 before passing it to `json_decode()` (this is only done if the raw response is determined not to be valid UTF-8).
+
 ## License
 
 This code is licensed under the [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
