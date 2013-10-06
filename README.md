@@ -1,11 +1,11 @@
 simple-json-rpc-client
 ======================
 
-Simple JSON-RPC 2.0 client which utilizes Zend for HTTP functionality.
+Simple JSON-RPC 2.0 client which utilizes Zend for HTTP functionality. It supports both standard requests and notifications, but not batch requests (mainly due to the single-threaded nature of PHP).
 
 ## Installation
 
-Install using Composer
+Install using Composer (the package is published on Packagist).
 
 ## Usage
 
@@ -13,6 +13,7 @@ Install using Composer
 <?php
 
 use SimpleJsonRpcClient;
+use SimpleJsonRpcClient\Request;
 
 // Initialize a client. Credentials are optional.
 $client = new Client('localhost', 'username', 'password');
@@ -21,13 +22,22 @@ $client = new Client('localhost', 'username', 'password');
 // so we only need to catch one type of exception
 try 
 {
-	// Only the first parameter is required. 
-	$request = new Request('method', array('param1'=>'value1'), 1);
+	// Send a request without parameters. The "id" will be added automatically unless supplied.
+	// Request objects return their JSON representation when treated as strings.
+	$request = new Request('method');
+	$response = $client->sendRequest($request);
 	
-	// When treated as a string the Request object returns its JSON representation
+	// Send a request with parameters
+	$request = new Request('method', array('param1'=>'value1'));
+	$response = $client->sendRequest($request);
 	
-	// Returns a Response object
-	$response = $client->performRequest($request));
+	// Send a parameter-less request with specific "id"
+	$request = new Request('method', null, 2);
+	$response = $client->sendRequest($request);
+	
+	// Send a notification
+	$request = new Notification('notification');
+	$client->sendNotification($request);
 }
 catch (Exception $e) 
 {
