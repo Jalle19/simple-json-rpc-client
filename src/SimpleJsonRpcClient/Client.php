@@ -103,6 +103,25 @@ class Client
 	}
 	
 	/**
+	 * Sends a notification request
+	 * @param \SimpleJsonRpcClient\Notification $notification the notification
+	 * @throws \SimpleJsonRpcClient\Exception if the request fails
+	 */
+	public function sendNotification(Notification $notification)
+	{
+		$httpRequest = $this->createHttpRequest($notification);
+
+		try
+		{
+			$this->_httpClient->dispatch($httpRequest);
+		}
+		catch (\Exception $e)
+		{
+			throw new \SimpleJsonRpcClient\Exception($e->getMessage());
+		}
+	}
+	
+	/**
 	 * Creates a new HTTP POST request with the appropriate content, headers 
 	 * and such, which can then be used to send JSON-RPC requests.
 	 * @param string $content the request content
