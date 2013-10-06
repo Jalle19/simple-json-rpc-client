@@ -1,6 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Exception;
 
 /**
  * Base class for JSON-RPC v2.0 requests.
