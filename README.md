@@ -27,8 +27,14 @@ try
 	$request = new Request('method');
 	$response = $client->sendRequest($request);
 	
-	// Send a request with parameters
+	// Send a request with parameters specified as an array
 	$request = new Request('method', array('param1'=>'value1'));
+	$response = $client->sendRequest($request);
+	
+	// Send a request with parameters specified as an object
+	$params = new stdClass();
+	$params->param1 = 'value1';
+	$request = new Request('method', $params);
 	$response = $client->sendRequest($request);
 	
 	// Send a parameter-less request with specific "id"
