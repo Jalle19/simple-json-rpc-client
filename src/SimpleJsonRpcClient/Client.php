@@ -79,15 +79,8 @@ class Client
 	 */
 	public function sendRequest(Request $request)
 	{
-		$httpRequest = new \Zend\Http\Request();
-		$httpRequest->setUri($this->_endPoint);
-		$httpRequest->setMethod(\Zend\Http\Request::METHOD_POST);
-		$httpRequest->setContent($request);
+		$httpRequest = $this->createHttpRequest($request);
 
-		// Set headers
-		$headers = $httpRequest->getHeaders();
-		$headers->addHeaderLine('Content-Type', 'application/json');
-		$httpRequest->setHeaders($headers);
 
 		// Try to dispatch the request. If it fails we re-throw the exception 
 		// from our own namespace
@@ -109,6 +102,27 @@ class Client
 		}
 
 		return new Response($httpResponse->getContent());
+	}
+	
+	/**
+	 * Creates a new HTTP POST request with the appropriate content, headers 
+	 * and such, which can then be used to send JSON-RPC requests.
+	 * @param string $content the request content
+	 * @return \Zend\Http\Request the request
+	 */
+	private function createHttpRequest($content)
+	{
+		$httpRequest = new \Zend\Http\Request();
+		$httpRequest->setUri($this->_endPoint);
+		$httpRequest->setMethod(\Zend\Http\Request::METHOD_POST);
+		$httpRequest->setContent($content);
+
+		// Set headers
+		$headers = $httpRequest->getHeaders();
+		$headers->addHeaderLine('Content-Type', 'application/json');
+		$httpRequest->setHeaders($headers);
+
+		return $httpRequest;
 	}
 
 }
