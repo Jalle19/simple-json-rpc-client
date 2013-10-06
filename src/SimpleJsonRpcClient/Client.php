@@ -1,5 +1,7 @@
 <?php
 
+namespace SimpleJsonRpcClient;
+
 /**
  * Simple JSON-RPC client. It uses the Zend HTTP client for performing the 
  * RPC requests.
@@ -8,9 +10,6 @@
  * @copyright Copyright &copy; Sam Stenvall 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-
-namespace SimpleJsonRpcClient;
-
 class Client
 {
 	
@@ -28,7 +27,6 @@ class Client
 	const JSON_RPC_VERSION = '2.0';
 
 	/**
-	 *
 	 * @var int the flags that have been set
 	 */
 	public static $flags;
