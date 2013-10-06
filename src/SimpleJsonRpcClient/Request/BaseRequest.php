@@ -33,7 +33,7 @@ abstract class BaseRequest
 	 */
 	function __construct($method, $params = null)
 	{
-		if ($params !== null && !is_array($params))
+		if ($params !== null && !is_array($params) && !is_object($params))
 			throw new Exception('Parameters must be specified as an array');
 
 		$this->_method = $method;
