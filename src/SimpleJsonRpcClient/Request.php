@@ -11,12 +11,7 @@ namespace SimpleJsonRpcClient;
  */
 class Request
 {
-	/**
-	 * The version string
-	 */
-
-	const JSON_RPC_VERSION = '2.0';
-
+	
 	/**
 	 * @var string the method
 	 */
