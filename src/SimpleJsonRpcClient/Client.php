@@ -73,11 +73,11 @@ class Client
 	}
 
 	/**
-	 * Performs a request and returns the response
-	 * @param \SimpleJsonRpcClient\Request $request a JSON-RPC request
+	 * Sends a request and returns the response
+	 * @param \SimpleJsonRpcClient\Request $request the request
 	 * @return \SimpleJsonRpcClient\Response the response
 	 */
-	public function performRequest($request)
+	public function sendRequest(Request $request)
 	{
 		$httpRequest = new \Zend\Http\Request();
 		$httpRequest->setUri($this->_endPoint);
