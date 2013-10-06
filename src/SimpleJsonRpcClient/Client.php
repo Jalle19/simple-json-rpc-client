@@ -75,15 +75,13 @@ class Client
 	/**
 	 * Sends a request and returns the response
 	 * @param \SimpleJsonRpcClient\Request $request the request
+	 * @throws \SimpleJsonRpcClient\Exception if the request fails
 	 * @return \SimpleJsonRpcClient\Response the response
 	 */
 	public function sendRequest(Request $request)
 	{
 		$httpRequest = $this->createHttpRequest($request);
 
-
-		// Try to dispatch the request. If it fails we re-throw the exception 
-		// from our own namespace
 		try
 		{
 			$httpResponse = $this->_httpClient->dispatch($httpRequest);
