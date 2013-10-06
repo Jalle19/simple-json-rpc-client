@@ -3,49 +3,46 @@
 namespace SimpleJsonRpcClient;
 
 /**
- * Represents a standard JSON-RPC v2.0 request
+ * Base class for JSON-RPC v2.0 requests.
  *
  * @author Sam Stenvall <neggelandia@gmail.com>
  * @copyright Copyright &copy; Sam Stenvall 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Request extends BaseRequest
+abstract class BaseRequest
 {
-	
+
 	/**
-	 * @var mixed the request ID
+	 * @var string the method
 	 */
-	private $_id;
+	protected $_method;
+
+	/**
+	 * @var mixed the request parameters as a key-value array or null when 
+	 * parameters are unused 
+	 */
+	protected $_params;
 
 	/**
 	 * Class constructor
 	 * @param string the method
 	 * @param mixed the request parameters. Defaults to null, meaning the 
 	 * request is sent without parameters
-	 * @param mixed optional request ID. Defaults to 0
 	 * @throws Exception if any of the parameters are malformed
 	 */
-	function __construct($method, $params = null, $id = 0)
+	function __construct($method, $params = null)
 	{
-		parent::__construct($method, $params);
-		$this->_id = $id;
+		if ($params !== null && !is_array($params))
+			throw new Exception('Parameters must be specified as an array');
+
+		$this->_method = $method;
+		$this->_params = $params;
 	}
 
 	/**
 	 * Turns the request into its JSON representation
 	 * @return string the JSON for the request
 	 */
-	function __toString()
-	{
-		$object = new \stdClass();
-		$object->jsonrpc = Client::JSON_RPC_VERSION;
-		$object->method = $this->_method;
-		$object->id = $this->_id;
-
-		if ($this->_params !== null)
-			$object->params = $this->_params;
-
-		return json_encode($object);
-	}
+	abstract public function __toString();
 
 }
