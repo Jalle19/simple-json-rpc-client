@@ -1,6 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Client;
 
 /**
  * Represents a notification request
