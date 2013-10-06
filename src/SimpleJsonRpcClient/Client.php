@@ -1,6 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient;
+use SimpleJsonRpcClient\Request;
 
 /**
  * Simple JSON-RPC client. It uses the Zend HTTP client for performing the 
@@ -74,11 +75,11 @@ class Client
 
 	/**
 	 * Sends a request and returns the response
-	 * @param \SimpleJsonRpcClient\Request $request the request
+	 * @param \SimpleJsonRpcClient\Request\Request $request the request
 	 * @throws \SimpleJsonRpcClient\Exception if the request fails
 	 * @return \SimpleJsonRpcClient\Response the response
 	 */
-	public function sendRequest(Request $request)
+	public function sendRequest(Request\Request $request)
 	{
 		$httpRequest = $this->createHttpRequest($request);
 
@@ -107,7 +108,7 @@ class Client
 	 * @param \SimpleJsonRpcClient\Notification $notification the notification
 	 * @throws \SimpleJsonRpcClient\Exception if the request fails
 	 */
-	public function sendNotification(Notification $notification)
+	public function sendNotification(Request\Notification $notification)
 	{
 		$httpRequest = $this->createHttpRequest($notification);
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleJsonRpcClient;
+namespace SimpleJsonRpcClient\Request;
 
 /**
  * Base class for JSON-RPC v2.0 requests.
