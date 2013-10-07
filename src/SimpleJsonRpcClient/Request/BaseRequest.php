@@ -29,12 +29,12 @@ abstract class BaseRequest
 	 * @param string the method
 	 * @param mixed the request parameters. Defaults to null, meaning the 
 	 * request is sent without parameters
-	 * @throws Exception if any of the parameters are malformed
+	 * @throws InvalidArgumentException if the parameter is of incorrect type
 	 */
 	function __construct($method, $params = null)
 	{
 		if ($params !== null && !is_array($params) && !is_object($params))
-			throw new Exception('Parameters must be specified as an array');
+			throw new InvalidArgumentException('Parameters must be either an array or an object');
 
 		$this->_method = $method;
 		$this->_params = $params;
