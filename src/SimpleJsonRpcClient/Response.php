@@ -18,7 +18,7 @@ class Response
 	public $jsonrpc;
 
 	/**
-	 * @var object the result
+	 * @var mixed the result
 	 */
 	public $result;
 

@@ -54,9 +54,9 @@ class Client
 
 	/**
 	 * Class constructor
-	 * @param type $endPoint
-	 * @param type $username
-	 * @param type $password
+	 * @param string $endPoint the URL JSON-RPC API endpoint
+	 * @param string $username (optional) username to use
+	 * @param string $password (optional) password to use
 	 * @param int $flags flags for the client
 	 */
 	public function __construct($endPoint, $username = null, $password = null, $flags = 0)

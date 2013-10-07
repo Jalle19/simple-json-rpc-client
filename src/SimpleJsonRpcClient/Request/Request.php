@@ -32,10 +32,6 @@ class Request extends BaseRequest
 		$this->_id = $id;
 	}
 
-	/**
-	 * Turns the request into its JSON representation
-	 * @return string the JSON for the request
-	 */
 	function __toString()
 	{
 		$object = new \stdClass();
