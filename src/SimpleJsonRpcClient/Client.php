@@ -68,6 +68,7 @@ class Client
 
 		// Initialize the HTTP client
 		$this->_httpClient = new \Zend\Http\Client();
+		$this->_httpClient->setOptions(array('keepalive'=>true));
 
 		if ($this->_username && $this->_password)
 			$this->_httpClient->setAuth($this->_username, $this->_password);
