@@ -90,7 +90,7 @@ class Client
 		}
 		catch (\Exception $e)
 		{
-			throw new \SimpleJsonRpcClient\Exception($e->getMessage());
+			throw new \SimpleJsonRpcClient\Exception($e->getMessage(), $e->getCode());
 		}
 		
 		// Check status
@@ -119,7 +119,7 @@ class Client
 		}
 		catch (\Exception $e)
 		{
-			throw new \SimpleJsonRpcClient\Exception($e->getMessage());
+			throw new \SimpleJsonRpcClient\Exception($e->getMessage(), $e->getCode());
 		}
 	}
 	
