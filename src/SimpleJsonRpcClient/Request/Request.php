@@ -37,10 +37,11 @@ class Request extends BaseRequest
 		$object = new \stdClass();
 		$object->jsonrpc = Client::JSON_RPC_VERSION;
 		$object->method = $this->_method;
-		$object->id = $this->_id;
 
 		if ($this->_params !== null)
 			$object->params = $this->_params;
+		
+		$object->id = $this->_id;
 
 		return json_encode($object);
 	}
