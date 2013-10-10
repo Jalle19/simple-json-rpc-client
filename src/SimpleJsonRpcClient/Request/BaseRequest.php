@@ -19,8 +19,7 @@ abstract class BaseRequest
 	protected $_method;
 
 	/**
-	 * @var mixed the request parameters as a key-value array or null when 
-	 * parameters are unused 
+	 * @var mixed the request parameters
 	 */
 	protected $_params;
 
