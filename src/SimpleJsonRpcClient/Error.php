@@ -1,7 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient;
-use SimpleJsonRpcClient\Exception\Exception;
+use SimpleJsonRpcClient\Exception\BaseException as Exception;
 
 /**
  * Respresents the error part of a JSON-RPC response
