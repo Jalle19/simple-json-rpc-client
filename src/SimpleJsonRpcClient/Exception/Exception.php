@@ -1,9 +1,9 @@
 <?php
 
-namespace SimpleJsonRpcClient;
+namespace SimpleJsonRpcClient\Exception;
 
 /**
- * Exception class for this library
+ * Base exception class for this library
  *
  * @author Sam Stenvall <neggelandia@gmail.com>
  * @copyright Copyright &copy; Sam Stenvall 2013-

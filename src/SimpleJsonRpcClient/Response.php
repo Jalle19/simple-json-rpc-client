@@ -1,6 +1,8 @@
 <?php
 
 namespace SimpleJsonRpcClient;
+use SimpleJsonRpcClient\Exception\Exception;
+use SimpleJsonRpcClient\Exception\ResponseErrorException;
 
 /**
  * Respresents a JSON-RPC response
@@ -49,11 +51,11 @@ class Response
 		}
 
 		if ($response->jsonrpc !== Client::JSON_RPC_VERSION)
-			throw new Exception('This client only supports JSON-RPC '.Client::JSON_RPC_VERSION);
-		
+			throw new Exception('Invalid JSON-RPC response. This client only supports JSON-RPC '.Client::JSON_RPC_VERSION);
+
 		if (isset($response->error))
-			throw new Exception($response->error->message, $response->error->code);
-		
+			throw new ResponseErrorException(new Error(json_encode ($response->error)));
+
 		$this->result = $response->result;
 	}
 	

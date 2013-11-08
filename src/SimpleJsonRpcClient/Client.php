@@ -2,6 +2,7 @@
 
 namespace SimpleJsonRpcClient;
 use SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Exception\ClientException;
 
 /**
  * Simple JSON-RPC client. It uses the Zend HTTP client for performing the 
@@ -90,13 +91,13 @@ class Client
 		}
 		catch (\Exception $e)
 		{
-			throw new \SimpleJsonRpcClient\Exception($e->getMessage(), $e->getCode());
+			throw new ClientException($e->getMessage(), $e->getCode());
 		}
 		
 		// Check status
 		if (!$httpResponse->isSuccess())
 		{
-			throw new \SimpleJsonRpcClient\Exception(
+			throw new ClientException(
 					$httpResponse->getReasonPhrase(), 
 					$httpResponse->getStatusCode());
 		}
@@ -119,7 +120,7 @@ class Client
 		}
 		catch (\Exception $e)
 		{
-			throw new \SimpleJsonRpcClient\Exception($e->getMessage(), $e->getCode());
+			throw new ClientException($e->getMessage(), $e->getCode());
 		}
 	}
 	
