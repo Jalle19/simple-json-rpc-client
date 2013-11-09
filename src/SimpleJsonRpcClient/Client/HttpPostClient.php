@@ -63,22 +63,7 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	public function sendRequest(Request\Request $request)
 	{
 		$httpRequest = $this->createHttpRequest($request);
-
-		try
-		{
-			$httpResponse = $this->_httpClient->dispatch($httpRequest);
-		}
-		catch (\Exception $e)
-		{
-			throw new ClientException($e->getMessage(), $e->getCode());
-		}
-		
-		// Check status
-		if (!$httpResponse->isSuccess())
-		{
-			throw new ClientException(
-			$httpResponse->getReasonPhrase(), $httpResponse->getStatusCode());
-		}
+		$httpResponse = $this->performHttpRequest($httpRequest);
 
 		return new Response($httpResponse->getContent());
 	}
@@ -86,15 +71,7 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	public function sendNotification(Request\Notification $notification)
 	{
 		$httpRequest = $this->createHttpRequest($notification);
-
-		try
-		{
-			$this->_httpClient->dispatch($httpRequest);
-		}
-		catch (\Exception $e)
-		{
-			throw new ClientException($e->getMessage(), $e->getCode());
-		}
+		$this->performHttpRequest($httpRequest, false);
 	}
 	
 	/**
@@ -116,6 +93,35 @@ class HttpPostClient extends BaseClient implements ClientInterface
 		$httpRequest->setHeaders($headers);
 
 		return $httpRequest;
+	}
+	
+	/**
+	 * Performs the specified HTTP request and returns the HTTP response
+	 * @param \Zend\Http\Request $httpRequest the request
+	 * @param boolean $ensureSuccess throw exception if the request was 
+	 * unsuccessful
+	 * @return \Zend\Http\Response the response
+	 * @throws ClientException if the request was unsuccessful
+	 */
+	private function performHttpRequest($httpRequest, $ensureSuccess = true)
+	{
+		try
+		{
+			$httpResponse = $this->_httpClient->dispatch($httpRequest);
+		}
+		catch (\Exception $e)
+		{
+			throw new ClientException($e->getMessage(), $e->getCode());
+		}
+
+		// Check status
+		if ($ensureSuccess && !$httpResponse->isSuccess())
+		{
+			throw new ClientException(
+			$httpResponse->getReasonPhrase(), $httpResponse->getStatusCode());
+		}
+
+		return $httpResponse;
 	}
 
 }
