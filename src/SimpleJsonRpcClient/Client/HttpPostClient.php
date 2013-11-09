@@ -2,7 +2,6 @@
 
 namespace SimpleJsonRpcClient\Client;
 
-use SimpleJsonRpcClient\BatchResponse;
 use SimpleJsonRpcClient\Response;
 use SimpleJsonRpcClient\Request;
 use SimpleJsonRpcClient\Exception\ClientException;
@@ -66,7 +65,7 @@ class HttpPostClient extends BaseClient implements ClientInterface
 		$httpRequest = $this->createHttpRequest($request);
 		$httpResponse = $this->performHttpRequest($httpRequest);
 
-		return new Response($httpResponse->getContent());
+		return new Response\Response($httpResponse->getContent());
 	}
 
 	public function sendNotification(Request\Notification $notification)
@@ -80,9 +79,8 @@ class HttpPostClient extends BaseClient implements ClientInterface
 		$httpRequest = $this->createHttpRequest($batchRequest);
 		$httpResponse = $this->performHttpRequest($httpRequest);
 		
-		return new BatchResponse($httpResponse->getContent());
+		return new Response\BatchResponse($httpResponse->getContent());
 	}
-
 	
 	/**
 	 * Creates a new HTTP POST request with the appropriate content, headers 

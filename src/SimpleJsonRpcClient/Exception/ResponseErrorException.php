@@ -1,7 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient\Exception;
-use SimpleJsonRpcClient\Error;
+use SimpleJsonRpcClient\Response\Error;
 
 /**
  * Exception class for response exceptions. It has a custom constructor that 

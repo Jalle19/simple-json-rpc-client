@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleJsonRpcClient;
+namespace SimpleJsonRpcClient\Response;
 
 /**
  * Represents a response to a batch request. It holds all individual 

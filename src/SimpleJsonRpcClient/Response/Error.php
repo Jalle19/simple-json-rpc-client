@@ -1,6 +1,6 @@
 <?php
 
-namespace SimpleJsonRpcClient;
+namespace SimpleJsonRpcClient\Response;
 use SimpleJsonRpcClient\Exception\BaseException as Exception;
 
 /**

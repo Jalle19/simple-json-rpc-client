@@ -17,7 +17,7 @@ interface ClientInterface
 	 * Sends a request and returns the response
 	 * @param Request\Request $request the request
 	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
-	 * @return \SimpleJsonRpcClient\Response the response
+	 * @return \SimpleJsonRpcClient\Response\Response the response
 	 */
 	public function sendRequest(Request\Request $request);
 
@@ -32,7 +32,7 @@ interface ClientInterface
 	 * Sends a batch request
 	 * @param Request\BatchRequest $batchRequest the batch request
 	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
-	 * @return \SimpleJsonRpcClient\BatchResponse the response
+	 * @return \SimpleJsonRpcClient\Response\BatchResponse the response
 	 */
 	public function sendBatchRequest(Request\BatchRequest $batchRequest);
 	
