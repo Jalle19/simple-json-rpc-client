@@ -15,16 +15,16 @@ interface ClientInterface
 
 	/**
 	 * Sends a request and returns the response
-	 * @param \SimpleJsonRpcClient\Request\Request $request the request
-	 * @throws \SimpleJsonRpcClient\Exception if the request fails
+	 * @param Request\Request $request the request
+	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
 	 * @return \SimpleJsonRpcClient\Response the response
 	 */
 	public function sendRequest(Request\Request $request);
 
 	/**
 	 * Sends a notification request
-	 * @param \SimpleJsonRpcClient\Notification $notification the notification
-	 * @throws \SimpleJsonRpcClient\Exception if the request fails
+	 * @param Request\Notification $notification the notification
+	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
 	 */
 	public function sendNotification(Request\Notification $notification);
 }
