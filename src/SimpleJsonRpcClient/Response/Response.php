@@ -2,7 +2,7 @@
 
 namespace SimpleJsonRpcClient\Response;
 use SimpleJsonRpcClient\Client\BaseClient;
-use SimpleJsonRpcClient\Exception\BaseException as Exception;
+use SimpleJsonRpcClient\Exception\InvalidResponseException;
 use SimpleJsonRpcClient\Exception\ResponseErrorException;
 
 /**
@@ -36,7 +36,7 @@ class Response
 	 * contains invalid JSON, if the JSON-RPC object represents an error or if 
 	 * the JSON-RPC response is invalid.
 	 * @param string $json the response data
-	 * @throws SimpleJsonRpcClient\Exception
+	 * @throws SimpleJsonRpcClient\Exception\BaseException
 	 */
 	public function __construct($json)
 	{
@@ -46,13 +46,13 @@ class Response
 		foreach (array('jsonrpc', 'id') as $attribute)
 		{
 			if (!isset($response->{$attribute}))
-				throw new Exception('Invalid JSON-RPC response. The raw response was: '.$json);
+				throw new InvalidResponseException('Invalid JSON-RPC response. The raw response was: '.$json);
 
 			$this->{$attribute} = $response->{$attribute};
 		}
 
 		if ($response->jsonrpc !== '2.0')
-			throw new Exception('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
+			throw new InvalidResponseException('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
 
 		if (isset($response->error))
 			throw new ResponseErrorException(new Error(json_encode ($response->error)));
@@ -64,7 +64,7 @@ class Response
 	 * Decodes the supplied JSON string, throwing an exception if decoding fails
 	 * @param string $json the raw JSON string
 	 * @return stdClass the decoded object
-	 * @throws Exception if a parse error occurs
+	 * @throws SimpleJsonRpcClient\Exception\BaseException
 	 */
 	private function decode($json)
 	{
@@ -100,7 +100,7 @@ class Response
 		}
 
 		if ($errorCode !== JSON_ERROR_NONE)
-			throw new Exception('Unable to decode JSON response: '.$errorDescription, $errorCode);
+			throw new InvalidResponseException('Unable to decode JSON response: '.$errorDescription, $errorCode);
 
 		return $response;
 	}
