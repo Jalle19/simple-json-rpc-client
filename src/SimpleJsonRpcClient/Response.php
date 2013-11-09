@@ -1,6 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient;
+use SimpleJsonRpcClient\Client\BaseClient;
 use SimpleJsonRpcClient\Exception\BaseException as Exception;
 use SimpleJsonRpcClient\Exception\ResponseErrorException;
 
@@ -50,8 +51,8 @@ class Response
 			$this->{$attribute} = $response->{$attribute};
 		}
 
-		if ($response->jsonrpc !== Client::JSON_RPC_VERSION)
-			throw new Exception('Invalid JSON-RPC response. This client only supports JSON-RPC '.Client::JSON_RPC_VERSION);
+		if ($response->jsonrpc !== '2.0')
+			throw new Exception('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
 
 		if (isset($response->error))
 			throw new ResponseErrorException(new Error(json_encode ($response->error)));
@@ -68,7 +69,7 @@ class Response
 	private function decode($json)
 	{
 		// Attempt to fix bad UTF-8 data when the right flag is set on the client
-		if (Client::$flags & Client::FLAG_ATTEMPT_UTF8_RECOVERY)
+		if (BaseClient::$flags & BaseClient::FLAG_ATTEMPT_UTF8_RECOVERY)
 			if (!preg_match("//u", $json))
 				$json = utf8_encode(utf8_decode($json));
 		

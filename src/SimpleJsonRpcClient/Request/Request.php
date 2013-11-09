@@ -1,7 +1,6 @@
 <?php
 
 namespace SimpleJsonRpcClient\Request;
-use SimpleJsonRpcClient\Client;
 
 /**
  * Represents a standard JSON-RPC v2.0 request
@@ -35,7 +34,7 @@ class Request extends BaseRequest
 	function __toString()
 	{
 		$object = new \stdClass();
-		$object->jsonrpc = Client::JSON_RPC_VERSION;
+		$object->jsonrpc = '2.0';
 		$object->method = $this->_method;
 
 		if ($this->_params !== null)

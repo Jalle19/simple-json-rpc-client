@@ -1,7 +1,6 @@
 <?php
 
 namespace SimpleJsonRpcClient\Request;
-use SimpleJsonRpcClient\Client;
 
 /**
  * Represents a notification request
@@ -16,7 +15,7 @@ class Notification extends BaseRequest
 	public function __toString()
 	{
 		$object = new \stdClass();
-		$object->jsonrpc = Client::JSON_RPC_VERSION;
+		$object->jsonrpc = '2.0';
 		$object->method = $this->_method;
 
 		if ($this->_params !== null)
