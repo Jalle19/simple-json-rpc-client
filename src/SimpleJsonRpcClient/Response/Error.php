@@ -1,7 +1,6 @@
 <?php
 
 namespace SimpleJsonRpcClient\Response;
-use SimpleJsonRpcClient\Exception\BaseException as Exception;
 
 /**
  * Respresents the error part of a JSON-RPC response
@@ -31,7 +30,7 @@ class Error
 	/**
 	 * Class constructor. It constructs itself from the provided JSON data
 	 * @param string $json the JSON representation of the error
-	 * @throws Exception if mandatory fields are missing
+	 * @throws InvalidArgumentException if mandatory fields are missing
 	 */
 	public function __construct($json)
 	{
@@ -40,7 +39,7 @@ class Error
 		// Mandatory fields
 		foreach (array('message', 'code') as $field)
 			if (!isset($error->{$field}))
-				throw new Exception('Could not construct error object: field "'.$field.'" is missing');
+				throw new InvalidArgumentException('Could not construct error object: field "'.$field.'" is missing');
 			else
 				$this->{$field} = $error->{$field};
 
