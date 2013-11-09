@@ -9,19 +9,7 @@ namespace SimpleJsonRpcClient\Request;
  * @copyright Copyright &copy; Sam Stenvall 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Notification extends BaseRequest
+class Notification extends SingleRequest
 {
-
-	public function __toString()
-	{
-		$object = new \stdClass();
-		$object->jsonrpc = '2.0';
-		$object->method = $this->_method;
-
-		if ($this->_params !== null)
-			$object->params = $this->_params;
-
-		return json_encode($object);
-	}
 
 }

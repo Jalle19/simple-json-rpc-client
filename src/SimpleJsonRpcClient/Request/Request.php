@@ -9,7 +9,7 @@ namespace SimpleJsonRpcClient\Request;
  * @copyright Copyright &copy; Sam Stenvall 2013-
  * @license http://www.opensource.org/licenses/bsd-license.php New BSD License
  */
-class Request extends BaseRequest
+class Request extends SingleRequest
 {
 	
 	/**
@@ -30,19 +30,13 @@ class Request extends BaseRequest
 		parent::__construct($method, $params);
 		$this->_id = $id;
 	}
-
-	function __toString()
+	
+	public function jsonSerialize()
 	{
-		$object = new \stdClass();
-		$object->jsonrpc = '2.0';
-		$object->method = $this->_method;
-
-		if ($this->_params !== null)
-			$object->params = $this->_params;
-		
+		$object = parent::jsonSerialize();
 		$object->id = $this->_id;
 
-		return json_encode($object);
+		return $object;
 	}
 
 }
