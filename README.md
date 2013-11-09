@@ -1,7 +1,11 @@
 simple-json-rpc-client
 ======================
 
-Simple JSON-RPC 2.0 client which utilizes Zend for HTTP functionality. It supports both standard requests and notifications, but not batch requests (mainly due to the single-threaded nature of PHP).
+Simple yet powerful JSON-RPC client which fully implements the JSON-RPC 2.0 specifications. It provides an interface for creating custom clients and comes with a default implementation which sends requests over HTTP using POST. Being standard-compliant it supports standard requests, notifications as well as batch requests.
+
+## Requirements
+
+PHP 5.4 is required.
 
 ## Installation
 
@@ -9,17 +13,20 @@ Install using Composer (the package is published on Packagist).
 
 ## Usage
 
+### Standard requests
+
 ```php
 <?php
 
-use SimpleJsonRpcClient;
-use SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Client\HttpPostClient as Client;
 
-// Initialize a client. Credentials are optional.
+use SimpleJsonRpcClient\Request\Request;
+use SimpleJsonRpcClient\Exception\BaseException;
+use SimpleJsonRpcClient\Response\Response;
+
+// Initialize the client. Credentials are optional.
 $client = new Client('localhost', 'username', 'password');
 
-// The client will rethrow all Zend exceptions from its own namespace 
-// so we only need to catch one type of exception
 try 
 {
 	// Send a request without parameters. The "id" will be added automatically unless supplied.
@@ -40,20 +47,125 @@ try
 	// Send a parameter-less request with specific "id"
 	$request = new Request('method', null, 2);
 	$response = $client->sendRequest($request);
-	
-	// Send a notification
-	$request = new Notification('notification');
-	$client->sendNotification($request);
 }
-catch (Exception $e) 
+catch (BaseException $e) 
 {
 	echo $e->getMessage();
 }
 ```
 
-## Flags
+### Notifications
 
-The client constructor takes a set of flags as the forth parameter. These flags can be used to alter the behavior of the client, mostly useful for working with buggy servers. For example, the `FLAG_ATTEMPT_UTF8_RECOVERY` flag will attempt to avoid "Malformed UTF-8 in response" errors by re-encoding the raw response as UTF-8 before passing it to `json_decode()` (this is only done if the raw response is determined not to be valid UTF-8).
+```php
+<?php
+
+use SimpleJsonRpcClient\Client\HttpPostClient as Client;
+
+use SimpleJsonRpcClient\Request\Notification;
+use SimpleJsonRpcClient\Exception\BaseException;
+
+$client = new Client('localhost', 'username', 'password');
+
+try 
+{
+	$request = new Notification('notification');
+	$client->sendNotification($request);
+}
+catch (BaseException $e) 
+{
+	echo $e->getMessage();
+}
+```
+
+### Batch requests
+
+```php
+<?php
+
+use SimpleJsonRpcClient\Client\HttpPostClient as Client;
+
+use SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Exception\BaseException;
+
+$client = new Client('localhost', 'username', 'password');
+
+try 
+{
+	$request = new Request\BatchRequest(array(
+		new Request\Request('method'),
+		new Request\Notification('anotherMethod'),
+		new Request\Request('yetAnotherMethod', null, 3)
+	));
+	
+	$batchResponse = $client->sendBatchRequest($request);
+	
+	// Retrieve all response objects
+	$responses = $batchResponse->getResponses();
+	
+	// Get specific response
+	$response = $batchResponse->getResponse(3);
+}
+catch (BaseException $e) 
+{
+	echo $e->getMessage();
+}
+```
+
+### Exception handling
+
+All exceptions derive from the base class BaseException. If you don't want to handle specific exceptions differently from others you can simply catch BaseException like in the examples above. Here's an example which illustrates the exception hierarchy:
+
+```php
+<?php
+
+use SimpleJsonRpcClient\Client\HttpPostClient as Client;
+
+use SimpleJsonRpcClient\Request;
+use SimpleJsonRpcClient\Exception;
+use SimpleJsonRpcClient\Response;
+
+$client = new Client('localhost', 'username', 'password');
+
+try 
+{
+	$request = new Request\Request('method', array('param1'=>'value1'));
+	$response = $client->sendRequest($request);
+}
+catch (ClientException $ce) {
+	// The client failed to execute the request
+}
+catch (InvalidResponseException $e) 
+{
+	// The response was invalid, e.g. it could not be parsed or it is not standard-compliant
+}
+catch (ResponseErrorException $re) {
+	// The request itself was successful but the JSON-RPC response indicates an error.
+}
+catch (Exception $e) {
+	// Anything else, usually InvalidArgumentException
+}
+```
+
+### Error handling
+
+Some JSON-RPC servers may return a "data" property in their response error. This property may contain valuable information as to the nature of the error. The special ResponseErrorException is thrown whenever a response indicates an error. The exception has a `getData()` method which returns an object representation of the error data.
+
+```
+...
+
+try {
+	...
+	$response = $client->sendRequest($request);
+}
+catch(ResponseErrorException $e) {
+	$data = $e->getData();
+}
+
+```
+
+### Flags
+
+The client constructor takes a set of flags as the forth parameter. These flags can be used to alter the behavior of the client, mostly useful for working with buggy servers. For example, the `FLAG_ATTEMPT_UTF8_RECOVERY` flag will cause the Response class to attempt to avoid "Malformed UTF-8 in response" errors by re-encoding the raw response as UTF-8 before passing it to `json_decode()`. This is only done if the raw response is determined not to be valid UTF-8.
 
 ## License
 
