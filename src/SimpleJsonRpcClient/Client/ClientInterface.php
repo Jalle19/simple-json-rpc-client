@@ -27,4 +27,13 @@ interface ClientInterface
 	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
 	 */
 	public function sendNotification(Request\Notification $notification);
+	
+	/**
+	 * Sends a batch request
+	 * @param Request\BatchRequest $batchRequest the batch request
+	 * @throws \SimpleJsonRpcClient\ClientException if the request fails
+	 * @return \SimpleJsonRpcClient\BatchResponse the response
+	 */
+	public function sendBatchRequest(Request\BatchRequest $batchRequest);
+	
 }
