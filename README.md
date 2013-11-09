@@ -150,11 +150,8 @@ catch (Exception $e) {
 
 Some JSON-RPC servers may return a "data" property in their response error. This property may contain valuable information as to the nature of the error. The special ResponseErrorException is thrown whenever a response indicates an error. The exception has a `getData()` method which returns an object representation of the error data.
 
-```
-...
-
+```php
 try {
-	...
 	$response = $client->sendRequest($request);
 }
 catch(ResponseErrorException $e) {
