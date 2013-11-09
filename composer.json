@@ -6,6 +6,7 @@
 	"homepage": "https://github.com/Jalle19/simple-json-rpc-client",
 	"license": "BSD-2-Clause",
     "require": {
+        "php": ">=5.4.0",
         "zendframework/zend-http": "2.2.*"
     },
     "autoload": {
