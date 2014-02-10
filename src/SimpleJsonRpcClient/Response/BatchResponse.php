@@ -1,6 +1,7 @@
 <?php
 
 namespace SimpleJsonRpcClient\Response;
+use SimpleJsonRpcClient\Exception\ResponseErrorException;
 
 /**
  * Represents a response to a batch request. It holds all individual 
@@ -22,12 +23,15 @@ class BatchResponse
 	/**
 	 * Class constructor
 	 * @param string $json the raw response JSON
+	 * @param boolean $ignoreErrorExceptions when set to true exceptions won't 
+	 * be thrown if a response represents an error. This way it is possible to 
+	 * examine the rest of the results instead of bailing out. Defaults to false.
 	 */
-	public function __construct($json)
+	public function __construct($json, $ignoreErrorExceptions = false)
 	{
 		// Decode the response into an array of Request objects
-		foreach (json_decode($json) as $response)
-			$this->_responses[] = new Response(json_encode($response));
+		foreach (json_decode($json) as $decodedResponse)
+			$this->_responses[] = new Response(json_encode($decodedResponse), $ignoreErrorExceptions);
 	}
 
 	/**

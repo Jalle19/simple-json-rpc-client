@@ -24,6 +24,11 @@ class Response
 	 * @var mixed the result
 	 */
 	public $result;
+	
+	/**
+	 * @var mixed the error
+	 */
+	public $error;
 
 	/**
 	 * @var int the ID of the response
@@ -38,7 +43,7 @@ class Response
 	 * @param string $json the response data
 	 * @throws SimpleJsonRpcClient\Exception\BaseException
 	 */
-	public function __construct($json)
+	public function __construct($json, $skipErrorException = false)
 	{
 		$response = $this->decode($json);
 
@@ -55,9 +60,15 @@ class Response
 			throw new InvalidResponseException('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
 
 		if (isset($response->error))
-			throw new ResponseErrorException(new Error(json_encode ($response->error)));
-
-		$this->result = $response->result;
+		{
+			$this->error = new Error(json_encode($response->error));
+			
+			// Optionally throw exception
+			if (!$skipErrorException)
+				throw new ResponseErrorException($this->error);
+		}
+		else
+			$this->result = $response->result;
 	}
 	
 	/**
