@@ -32,7 +32,7 @@ abstract class SingleRequest extends BaseRequest
 	function __construct($method, $params = null)
 	{
 		if ($params !== null && !is_array($params) && !is_object($params))
-			throw new InvalidArgumentException('Parameters must be either an array or an object');
+			throw new \InvalidArgumentException('Parameters must be either an array or an object');
 
 		$this->_method = $method;
 		$this->_params = $params;

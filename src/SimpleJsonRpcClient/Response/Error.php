@@ -39,7 +39,7 @@ class Error
 		// Mandatory fields
 		foreach (array('message', 'code') as $field)
 			if (!isset($error->{$field}))
-				throw new InvalidArgumentException('Could not construct error object: field "'.$field.'" is missing');
+				throw new \InvalidArgumentException('Could not construct error object: field "'.$field.'" is missing');
 			else
 				$this->{$field} = $error->{$field};
 

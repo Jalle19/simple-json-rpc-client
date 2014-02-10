@@ -26,7 +26,7 @@ class BatchRequest extends BaseRequest
 	{
 		foreach ($requests as $request)
 			if (!$request instanceof BaseRequest)
-				throw new InvalidArgumentException('Requests must be descendants of BaseRequest');
+				throw new \InvalidArgumentException('Requests must be descendants of BaseRequest');
 
 		$this->_requests = $requests;
 	}
