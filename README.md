@@ -11,7 +11,7 @@ PHP 5.4 is required.
 
 ## Installation
 
-Install using Composer (the package is published on Packagist).
+Install using Composer (the package is published on Packagist). Install with `--no-dev` if you don't want or need the ability to run the test suite.
 
 ## Usage
 
