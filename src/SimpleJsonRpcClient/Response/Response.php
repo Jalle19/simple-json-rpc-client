@@ -34,6 +34,11 @@ class Response
 	 * @var int the ID of the response
 	 */
 	public $id;
+	
+	/**
+	 * @var string the raw response
+	 */
+	private $_rawResponse;
 
 	/**
 	 * Class constructor. It takes a raw response in JSON as parameter and 
@@ -45,6 +50,7 @@ class Response
 	 */
 	public function __construct($json, $skipErrorException = false)
 	{
+		$this->_rawResponse = $json;
 		$response = $this->decode($json);
 
 		// Check for mandatory fields
@@ -114,6 +120,14 @@ class Response
 			throw new InvalidResponseException('Unable to decode JSON response: '.$errorDescription, $errorCode);
 
 		return $response;
+	}
+	
+	/**
+	 * @return string the raw response as JSON
+	 */
+	public function getRawResponse()
+	{
+		return $this->_rawResponse;
 	}
 
 }
