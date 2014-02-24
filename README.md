@@ -169,7 +169,7 @@ The client constructor takes a set of flags as the forth parameter. These flags 
 
 ## Test suite
 
-Run `vendor/bin/phpunit` in the project root folder to run the unit tests.
+Run `vendor/bin/phpunit` in the project root folder to run the unit tests. The test suite will launch a mock JSON-RPC server on localhost:8585 using PHP's internal web server. If this port is not available on your system you can change it by editing `phpunit.xml`.
 
 ## License
 
