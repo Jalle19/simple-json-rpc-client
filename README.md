@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Jalle19/simple-json-rpc-client.png?branch=master)](https://travis-ci.org/Jalle19/simple-json-rpc-client)
+
 simple-json-rpc-client
 ======================
 
@@ -163,6 +165,11 @@ catch(ResponseErrorException $e) {
 ### Flags
 
 The client constructor takes a set of flags as the forth parameter. These flags can be used to alter the behavior of the client, mostly useful for working with buggy servers. For example, the `FLAG_ATTEMPT_UTF8_RECOVERY` flag will cause the Response class to attempt to avoid "Malformed UTF-8 in response" errors by re-encoding the raw response as UTF-8 before passing it to `json_decode()`. This is only done if the raw response is determined not to be valid UTF-8.
+
+
+## Test suite
+
+Run `vendor/bin/phpunit` in the project root folder to run the unit tests.
 
 ## License
 
