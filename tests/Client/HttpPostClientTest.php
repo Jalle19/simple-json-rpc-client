@@ -30,30 +30,14 @@ class HttpPostClientTest extends \PHPUnit_Framework_TestCase
 	public function testSendRequest()
 	{
 		$request = new Request\Request('add', array('x'=>1, 'y'=>2));
-
-		try
-		{
-			$response = $this->_client->sendRequest($request);
-			$this->assertEquals(3, $response->result);
-		}
-		catch (\Exception $e)
-		{
-			$this->fail($e->getMessage());
-		}
+		$response = $this->_client->sendRequest($request);
+		$this->assertEquals(3, $response->result);
 	}
 
 	public function testSendNotification()
 	{
 		$notification = new Request\Notification('start');
-
-		try
-		{
-			$this->_client->sendNotification($notification);
-		}
-		catch (\Exception $e)
-		{
-			$this->fail($e->getMessage());
-		}
+		$this->_client->sendNotification($notification);
 	}
 
 	/**
