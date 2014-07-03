@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Jalle19/simple-json-rpc-client.png?branch=master)](https://travis-ci.org/Jalle19/simple-json-rpc-client) [![Coverage Status](https://coveralls.io/repos/Jalle19/simple-json-rpc-client/badge.png)](https://coveralls.io/r/Jalle19/simple-json-rpc-client)
+[![Build Status](https://travis-ci.org/Jalle19/simple-json-rpc-client.png?branch=master)](https://travis-ci.org/Jalle19/simple-json-rpc-client) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Jalle19/simple-json-rpc-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Jalle19/simple-json-rpc-client/?branch=master) [![Coverage Status](https://coveralls.io/repos/Jalle19/simple-json-rpc-client/badge.png)](https://coveralls.io/r/Jalle19/simple-json-rpc-client)
 
 simple-json-rpc-client
 ======================
