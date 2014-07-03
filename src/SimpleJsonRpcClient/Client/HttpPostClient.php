@@ -87,6 +87,7 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	 * and such, which can then be used to send JSON-RPC requests.
 	 * @param string $content the request content
 	 * @return \Zend\Http\Request the request
+	 * @throws ClientException if the Content-Type header cannot be set
 	 */
 	private function createHttpRequest($content)
 	{
@@ -97,6 +98,10 @@ class HttpPostClient extends BaseClient implements ClientInterface
 
 		// Set headers
 		$headers = $httpRequest->getHeaders();
+		
+		if (!($headers instanceof \Zend\Http\Headers))
+			throw new ClientException('Unable to configure HTTP headers');
+
 		$headers->addHeaderLine('Content-Type', 'application/json');
 		$httpRequest->setHeaders($headers);
 
