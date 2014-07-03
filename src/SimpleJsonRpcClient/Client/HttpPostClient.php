@@ -33,7 +33,7 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	private $_username;
 
 	/**
-	 * @var password the username used with HTTP authentication
+	 * @var string password the username used with HTTP authentication
 	 */
 	private $_password;
 
