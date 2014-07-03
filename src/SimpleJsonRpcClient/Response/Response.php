@@ -92,7 +92,6 @@ class Response
 		
 		$response = json_decode($json);
 		$errorCode = json_last_error();
-		$errorDescription = '';
 
 		switch ($errorCode)
 		{
