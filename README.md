@@ -142,6 +142,7 @@ catch (InvalidResponseException $e)
 }
 catch (ResponseErrorException $re) {
 	// The request itself was successful but the JSON-RPC response indicates an error.
+	// A subclass of ResponseErrorException is thrown for pre-defined errors (see http://www.jsonrpc.org/specification#error_object)
 }
 catch (Exception $e) {
 	// Anything else, usually InvalidArgumentException

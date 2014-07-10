@@ -2,8 +2,7 @@
 
 namespace SimpleJsonRpcClient\Response;
 use SimpleJsonRpcClient\Client\BaseClient;
-use SimpleJsonRpcClient\Exception\InvalidResponseException;
-use SimpleJsonRpcClient\Exception\ResponseErrorException;
+use SimpleJsonRpcClient\Exception;
 
 /**
  * Respresents a JSON-RPC response
@@ -57,13 +56,13 @@ class Response
 		foreach (array('jsonrpc', 'id') as $attribute)
 		{
 			if (!isset($response->{$attribute}))
-				throw new InvalidResponseException('Invalid JSON-RPC response. The raw response was: '.$json);
+				throw new Exception\InvalidResponseException('Invalid JSON-RPC response. The raw response was: '.$json);
 
 			$this->{$attribute} = $response->{$attribute};
 		}
 
 		if ($response->jsonrpc !== '2.0')
-			throw new InvalidResponseException('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
+			throw new Exception\InvalidResponseException('Invalid JSON-RPC response. This client only supports JSON-RPC 2.0');
 
 		if (isset($response->error))
 		{
@@ -71,7 +70,7 @@ class Response
 			
 			// Optionally throw exception
 			if (!$skipErrorException)
-				throw new ResponseErrorException($this->error);
+				throw Exception\ResponseErrorFactory::create($this->error);
 		}
 		else
 			$this->result = $response->result;
@@ -116,7 +115,7 @@ class Response
 		}
 
 		if ($errorCode !== JSON_ERROR_NONE)
-			throw new InvalidResponseException('Unable to decode JSON response: '.$errorDescription, $errorCode);
+			throw new Exception\InvalidResponseException('Unable to decode JSON response: '.$errorDescription, $errorCode);
 
 		return $response;
 	}

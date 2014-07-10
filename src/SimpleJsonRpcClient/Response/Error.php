@@ -11,6 +11,12 @@ namespace SimpleJsonRpcClient\Response;
  */
 class Error
 {
+	
+	const CODE_PARSE_ERROR = -32700;
+	const CODE_INVALID_REQUEST = -32600;
+	const CODE_METHOD_NOT_FOUND = -32601;
+	const CODE_INVALID_PARAMS = -32602;
+	const CODE_INTERNAL_ERROR = -32603;
 
 	/**
 	 * @var string the error message
