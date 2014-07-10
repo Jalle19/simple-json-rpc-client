@@ -1,7 +1,6 @@
 <?php
 
 namespace SimpleJsonRpcClient\Response;
-use SimpleJsonRpcClient\Exception\ResponseErrorException;
 
 /**
  * Represents a response to a batch request. It holds all individual 
