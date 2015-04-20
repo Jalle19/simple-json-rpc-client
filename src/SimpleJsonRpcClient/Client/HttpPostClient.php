@@ -118,17 +118,21 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	 */
 	private function performHttpRequest($httpRequest, $ensureSuccess = true)
 	{
+		$httpResponse = null;
+	
+		// See if the requests succeeds at all
 		try
 		{
 			$httpResponse = $this->_httpClient->dispatch($httpRequest);
 		}
 		catch (\Exception $e)
 		{
-			throw new ClientException($e->getMessage(), $e->getCode());
+			if ($ensureSuccess)
+				throw new ClientException($e->getMessage(), $e->getCode());
 		}
 
-		// Check status
-		if ($ensureSuccess && !$httpResponse->isSuccess())
+		// Check the request status
+		if ($ensureSuccess && $httpResponse !== null && !$httpResponse->isSuccess())
 		{
 			throw new ClientException(
 			$httpResponse->getReasonPhrase(), $httpResponse->getStatusCode());
