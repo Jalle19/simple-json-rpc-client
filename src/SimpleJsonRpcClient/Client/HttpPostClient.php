@@ -43,8 +43,10 @@ class HttpPostClient extends BaseClient implements ClientInterface
 	 * @param string $username (optional) username to use
 	 * @param string $password (optional) password to use
 	 * @param int $flags flags for the client
+	 * @param array $options options to pass to the underlying HTTP client
 	 */
-	public function __construct($endPoint, $username = null, $password = null, $flags = self::FLAG_NONE)
+	public function __construct($endPoint, $username = null, $password = null, 
+			$flags = self::FLAG_NONE, $options = array())
 	{
 		parent::__construct($flags);
 
@@ -53,8 +55,10 @@ class HttpPostClient extends BaseClient implements ClientInterface
 		$this->_password = $password;
 
 		// Initialize the HTTP client
+		$clientOptions = array_merge(array('keepalive'=>true), $options);
+		
 		$this->_httpClient = new \Zend\Http\Client();
-		$this->_httpClient->setOptions(array('keepalive'=>true));
+		$this->_httpClient->setOptions($clientOptions);
 
 		if ($this->_username && $this->_password)
 			$this->_httpClient->setAuth($this->_username, $this->_password);
